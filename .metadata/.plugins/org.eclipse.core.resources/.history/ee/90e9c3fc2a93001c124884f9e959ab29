@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+    <db:config name="Database_Config" doc:name="Database Config" doc:id="7ceb6c9d-83e4-46f5-985f-d66389ccabcf" >
+		<db:my-sql-connection host="${db.mysql.host}" port="${db.mysql.port}" user="${db.mysql.user}" password="${db.mysql.password}" database="${db.mysql.database}" />
+	</db:config>
+	<flow name="get:\items:items-sapi-config">
+        <db:select doc:name="GetAllItems" doc:id="7c0cb81b-b3e1-4092-ae91-20ef2b262e27" config-ref="Database_Config">
+			<db:sql><![CDATA[select `id`, `created_at`, `updated_at`, `title`, `description`, `category_id`, `price`, `stock`, `brand_id`
+from `items`
+where `price` > :minPrice and `price` < :maxPrice;]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	minPrice: attributes.queryParams.min_price,
+	maxPrice: attributes.queryParams.max_price
+}]]]></db:input-parameters>
+		</db:select>
+		<flow-ref doc:name="Flow Reference" doc:id="7b6736e1-9e4f-4f7d-86ff-f4a361af5e2f" name="transformToJson" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="813ccbcc-90d6-4afa-bd20-61c533b49d0c" type="DB:CONNECTIVITY">
+				<ee:transform doc:name="Transform Message" doc:id="32e399db-d2b3-43cb-9548-6471f9efe870" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Failed to connect to database"}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a6d43125-6117-4913-8687-6baef6608570" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="get:\items\(id):items-sapi-config">
+        <db:select doc:name="GetOneItemById" doc:id="0a28909c-2ab4-4012-bea8-2c51f69e677c" config-ref="Database_Config">
+			<db:sql><![CDATA[select `id`, `created_at`, `updated_at`, `title`, `description`, `category_id`, `price`, `stock`, `brand_id`
+from `items`
+where id=:id;]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	id: attributes.uriParams.id
+}]]]></db:input-parameters>
+		</db:select>
+		<flow-ref doc:name="Flow Reference" doc:id="e1ebc348-91a8-44d2-8d93-c59674baeb31" name="transformToJson" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="188e963b-3cd7-47cd-affb-4e72539d4ae5" type="DB:CONNECTIVITY"/>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="d65cc2a1-2432-406c-b913-529d7dcec306" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="post:\items:application\json:items-sapi-config">
+		<db:bulk-insert doc:name="CreateSeveralItems" doc:id="1d078d28-c63c-4af3-9140-2b43a28d4013" config-ref="Database_Config">
+			<db:sql><![CDATA[insert into items (title, description, category_id, price, brand_id, stock)
+values (:title, :description, :category_id, :price, :brand_id, :stock);]]></db:sql>
+		</db:bulk-insert>
+		<flow-ref doc:name="Flow Reference" doc:id="3df28100-c88c-4527-bc90-7287398aa137" name="createdOutput" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0339c4a6-6509-41a3-9f03-262cab9449bb" type="DB:CONNECTIVITY"/>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0817fe07-8967-4b15-a414-88f416be372a" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="patch:\items\(id):application\json:items-sapi-config">
+		<db:update doc:name="UpdateOneItemById" doc:id="3969bc6c-72a6-4758-95c8-35a258b66faa" config-ref="Database_Config">
+			<db:sql><![CDATA[UPDATE items
+SET
+    `price` = :price,
+    `description` = :description,
+    `title` = :title,
+    `stock` = :stock
+WHERE id = :id;]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	id: attributes.uriParams.id,
+	price: payload.price,
+	description: payload.description,
+	title: payload.title,
+	stock: payload.stock,
+}]]]></db:input-parameters>
+		</db:update>
+		<flow-ref doc:name="Flow Reference" doc:id="7efbca79-f086-4754-b7b7-5c7d94b6646a" name="okOutput" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="9fd8312c-f496-4e4a-bdb7-c9894e75f875" type="DB:CONNECTIVITY"/>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ad549778-3ccb-4344-9e89-ae08f0a00864" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="delete:\items\(id):items-sapi-config">
+		<db:delete doc:name="RemoveOneItemById" doc:id="f916b335-7417-4424-b628-8aca02628d08" config-ref="Database_Config">
+			<db:sql ><![CDATA[delete from items
+where id=:id;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	id: attributes.uriParams.id
+}]]]></db:input-parameters>
+		</db:delete>
+		<flow-ref doc:name="Flow Reference" doc:id="4e624d02-2c3f-439f-8d82-5cdb99458895" name="okOutput"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="32811d37-41ca-4591-86c4-f9d2dfd3ea99" type="DB:CONNECTIVITY"/>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b2f7aa2f-5136-417f-b4b2-7db1805bbfa5" type="ANY"/>
+		</error-handler>
+    </flow>
+    <sub-flow name="okOutput" doc:id="9e6505b1-6a5c-432a-a2db-8f918933fa82" >
+		<ee:transform doc:name="OkOutput">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Ok"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</sub-flow>
+	<sub-flow name="transformToJson" doc:id="5edf0f0f-3de0-4aff-8f63-1fabca4e2b87" >
+		<ee:transform doc:name="JsonOutput">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</sub-flow>
+	<sub-flow name="createdOutput" doc:id="41f33556-dbb2-45c4-9af0-77ad7be02ab9" >
+		<ee:transform doc:name="CreatedOutput">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Created"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+	</sub-flow>
+</mule>

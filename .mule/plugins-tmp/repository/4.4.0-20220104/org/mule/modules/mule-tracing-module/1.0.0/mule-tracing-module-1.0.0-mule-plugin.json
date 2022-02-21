@@ -1,0 +1,1106 @@
+{
+  "minMuleVersion": "4.4.0",
+  "extensionModel": {
+    "types": [],
+    "messageSources": [],
+    "functions": [],
+    "configurations": [{
+      "externalLibraryModels": [],
+      "operations": [],
+      "messageSources": [],
+      "name": "config",
+      "description": "Default configuration",
+      "modelProperties": {"requiredForMetadata": {"requiredParameters": ["name"]}},
+      "stereotype": {
+        "parent": {
+          "namespace": "MULE",
+          "type": "MODULE_CONFIG"
+        },
+        "namespace": "TRACING",
+        "type": "CONFIG"
+      },
+      "parameterGroupModels": [{
+        "name": "General",
+        "layoutModel": {
+          "password": false,
+          "query": false,
+          "text": false,
+          "order": 1
+        },
+        "description": "",
+        "modelProperties": {},
+        "parameters": [{
+          "semanticTerms": [],
+          "role": "BEHAVIOUR",
+          "description": "The identifier of this element used to reference it in other components",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "String"
+          },
+          "required": true,
+          "expressionSupport": "NOT_SUPPORTED",
+          "fieldValueProviderModels": [],
+          "hasDynamicType": false,
+          "isConfigOverride": false,
+          "dslConfiguration": {
+            "allowTopLevelDefinition": false,
+            "allowsInlineDefinition": false,
+            "allowsReferences": false
+          },
+          "name": "name",
+          "layoutModel": {
+            "password": false,
+            "query": false,
+            "text": false,
+            "order": 1
+          },
+          "allowedStereotypeModels": [],
+          "isComponentId": true
+        }],
+        "exclusiveParametersModels": [],
+        "showInDsl": false
+      }],
+      "connectionProviders": []
+    }],
+    "externalLibraries": [],
+    "description": "Mule module extension for traceability features, including customizable MDC and CorrelationID",
+    "resources": [],
+    "subTypes": [],
+    "modelProperties": {},
+    "constructs": [],
+    "connectionProviders": [],
+    "version": "1.0.0",
+    "privilegedArtifacts": [],
+    "importedTypes": [],
+    "xmlDsl": {
+      "schemaVersion": "1.0.0",
+      "prefix": "tracing",
+      "schemaLocation": "http://www.mulesoft.org/schema/mule/tracing/current/mule-tracing.xsd",
+      "namespace": "http://www.mulesoft.org/schema/mule/tracing",
+      "xsdFileName": "mule-tracing.xsd"
+    },
+    "operations": [
+      {
+        "semanticTerms": [],
+        "kind": "operation",
+        "executionType": "CPU_LITE",
+        "description": "Clears all the custom variables from the event logging context. It will *not* remove the correlation id nor the current event processor, since those variables are managed internally by mule runtime.",
+        "modelProperties": {},
+        "parameterGroupModels": [{
+          "name": "Error Mappings",
+          "layoutModel": {
+            "password": false,
+            "query": false,
+            "text": false,
+            "order": 1
+          },
+          "description": "",
+          "modelProperties": {},
+          "parameters": [{
+            "semanticTerms": [],
+            "role": "BEHAVIOUR",
+            "description": "Set of error mappings",
+            "modelProperties": {
+              "org.mule.runtime.extension.api.property.InfrastructureParameterModelProperty": {"sequence": 12},
+              "org.mule.runtime.extension.api.property.QNameModelProperty": {"value": {
+                "localPart": "error-mappings",
+                "prefix": "mule",
+                "namespaceURI": "http://www.mulesoft.org/schema/mule/core"
+              }},
+              "sinceMuleVersion": {"version": "4.4.0"}
+            },
+            "type": {
+              "item": {
+                "annotations": {
+                  "infrastructureType": {},
+                  "typeId": "errorMapping"
+                },
+                "type": "Object",
+                "fields": [
+                  {
+                    "model": {
+                      "format": {
+                        "validMimeTypes": ["text/plain"],
+                        "id": "text",
+                        "label": "Text"
+                      },
+                      "annotations": {
+                        "typeId": "errorTypeMatcher",
+                        "enum": {
+                          "values": [
+                            "ANY",
+                            "REDELIVERY_EXHAUSTED",
+                            "TRANSFORMATION",
+                            "EXPRESSION",
+                            "SECURITY",
+                            "CLIENT_SECURITY",
+                            "SERVER_SECURITY",
+                            "ROUTING",
+                            "CONNECTIVITY",
+                            "RETRY_EXHAUSTED",
+                            "TIMEOUT"
+                          ],
+                          "type": "[Ljava.lang.String;"
+                        }
+                      },
+                      "type": "String"
+                    },
+                    "key": {"name": "source"}
+                  },
+                  {
+                    "model": {
+                      "format": {
+                        "validMimeTypes": ["text/plain"],
+                        "id": "text",
+                        "label": "Text"
+                      },
+                      "annotations": {"typeId": "errorTypeDefinition"},
+                      "type": "String"
+                    },
+                    "key": {
+                      "name": "target",
+                      "required": "true"
+                    }
+                  }
+                ]
+              },
+              "format": "java",
+              "annotations": {
+                "typeDsl": {
+                  "allowTopLevelDefinition": false,
+                  "allowInlineDefinition": true
+                },
+                "infrastructureType": {},
+                "description": {"value": "Determines that an error thrown by this operation should be mapped to another"}
+              },
+              "type": "Array"
+            },
+            "required": false,
+            "expressionSupport": "NOT_SUPPORTED",
+            "fieldValueProviderModels": [],
+            "hasDynamicType": false,
+            "isConfigOverride": false,
+            "dslConfiguration": {
+              "allowTopLevelDefinition": false,
+              "allowsInlineDefinition": true,
+              "allowsReferences": false
+            },
+            "name": "errorMappings",
+            "layoutModel": {
+              "password": false,
+              "tabName": "Error Mapping",
+              "query": false,
+              "text": false,
+              "order": 1
+            },
+            "allowedStereotypeModels": [],
+            "isComponentId": false
+          }],
+          "exclusiveParametersModels": [],
+          "showInDsl": false
+        }],
+        "output": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "outputAttributes": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "supportsStreaming": false,
+        "requiresConnection": false,
+        "blocking": true,
+        "name": "clearLoggingVariables",
+        "stereotype": {
+          "parent": {
+            "parent": {
+              "namespace": "MULE",
+              "type": "PROCESSOR"
+            },
+            "namespace": "TRACING",
+            "type": "PROCESSOR"
+          },
+          "namespace": "TRACING",
+          "type": "CLEAR_LOGGING_VARIABLES"
+        },
+        "nestedComponents": [],
+        "transactional": false,
+        "notifications": [],
+        "errors": []
+      },
+      {
+        "semanticTerms": [],
+        "kind": "operation",
+        "executionType": "CPU_LITE",
+        "description": "Removes a variable from the event logging context.",
+        "modelProperties": {},
+        "parameterGroupModels": [
+          {
+            "name": "General",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 1
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [{
+              "semanticTerms": [],
+              "role": "BEHAVIOUR",
+              "description": "Name from the logging variable to be removed.",
+              "modelProperties": {},
+              "type": {
+                "format": "java",
+                "type": "String"
+              },
+              "required": true,
+              "expressionSupport": "SUPPORTED",
+              "fieldValueProviderModels": [],
+              "hasDynamicType": false,
+              "isConfigOverride": false,
+              "dslConfiguration": {
+                "allowTopLevelDefinition": false,
+                "allowsInlineDefinition": false,
+                "allowsReferences": false
+              },
+              "name": "variableName",
+              "layoutModel": {
+                "password": false,
+                "query": false,
+                "text": false,
+                "order": 1
+              },
+              "allowedStereotypeModels": [],
+              "isComponentId": false
+            }],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          },
+          {
+            "name": "Error Mappings",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 2
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [{
+              "semanticTerms": [],
+              "role": "BEHAVIOUR",
+              "description": "Set of error mappings",
+              "modelProperties": {
+                "org.mule.runtime.extension.api.property.InfrastructureParameterModelProperty": {"sequence": 12},
+                "org.mule.runtime.extension.api.property.QNameModelProperty": {"value": {
+                  "localPart": "error-mappings",
+                  "prefix": "mule",
+                  "namespaceURI": "http://www.mulesoft.org/schema/mule/core"
+                }},
+                "sinceMuleVersion": {"version": "4.4.0"}
+              },
+              "type": {
+                "item": {
+                  "annotations": {
+                    "infrastructureType": {},
+                    "typeId": "errorMapping"
+                  },
+                  "type": "Object",
+                  "fields": [
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {
+                          "typeId": "errorTypeMatcher",
+                          "enum": {
+                            "values": [
+                              "ANY",
+                              "REDELIVERY_EXHAUSTED",
+                              "TRANSFORMATION",
+                              "EXPRESSION",
+                              "SECURITY",
+                              "CLIENT_SECURITY",
+                              "SERVER_SECURITY",
+                              "ROUTING",
+                              "CONNECTIVITY",
+                              "RETRY_EXHAUSTED",
+                              "TIMEOUT"
+                            ],
+                            "type": "[Ljava.lang.String;"
+                          }
+                        },
+                        "type": "String"
+                      },
+                      "key": {"name": "source"}
+                    },
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {"typeId": "errorTypeDefinition"},
+                        "type": "String"
+                      },
+                      "key": {
+                        "name": "target",
+                        "required": "true"
+                      }
+                    }
+                  ]
+                },
+                "format": "java",
+                "annotations": {
+                  "typeDsl": {
+                    "allowTopLevelDefinition": false,
+                    "allowInlineDefinition": true
+                  },
+                  "infrastructureType": {},
+                  "description": {"value": "Determines that an error thrown by this operation should be mapped to another"}
+                },
+                "type": "Array"
+              },
+              "required": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "fieldValueProviderModels": [],
+              "hasDynamicType": false,
+              "isConfigOverride": false,
+              "dslConfiguration": {
+                "allowTopLevelDefinition": false,
+                "allowsInlineDefinition": true,
+                "allowsReferences": false
+              },
+              "name": "errorMappings",
+              "layoutModel": {
+                "password": false,
+                "tabName": "Error Mapping",
+                "query": false,
+                "text": false,
+                "order": 2
+              },
+              "allowedStereotypeModels": [],
+              "isComponentId": false
+            }],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          }
+        ],
+        "output": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "outputAttributes": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "supportsStreaming": false,
+        "requiresConnection": false,
+        "blocking": true,
+        "name": "removeLoggingVariable",
+        "stereotype": {
+          "parent": {
+            "parent": {
+              "namespace": "MULE",
+              "type": "PROCESSOR"
+            },
+            "namespace": "TRACING",
+            "type": "PROCESSOR"
+          },
+          "namespace": "TRACING",
+          "type": "REMOVE_LOGGING_VARIABLE"
+        },
+        "nestedComponents": [],
+        "transactional": false,
+        "notifications": [],
+        "errors": []
+      },
+      {
+        "semanticTerms": [],
+        "kind": "operation",
+        "executionType": "CPU_LITE",
+        "description": "Adds a new variable in the event logging context. It will be present in the next operations executions for this event.",
+        "modelProperties": {},
+        "parameterGroupModels": [
+          {
+            "name": "General",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 1
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [
+              {
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "Name from the logging variable to be added.",
+                "modelProperties": {},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": true,
+                "expressionSupport": "SUPPORTED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "variableName",
+                "layoutModel": {
+                  "password": false,
+                  "query": false,
+                  "text": false,
+                  "order": 1
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              },
+              {
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "Value to add to the logging context.",
+                "modelProperties": {},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": true,
+                "expressionSupport": "SUPPORTED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "value",
+                "layoutModel": {
+                  "password": false,
+                  "query": false,
+                  "text": false,
+                  "order": 2
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              }
+            ],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          },
+          {
+            "name": "Error Mappings",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 2
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [{
+              "semanticTerms": [],
+              "role": "BEHAVIOUR",
+              "description": "Set of error mappings",
+              "modelProperties": {
+                "org.mule.runtime.extension.api.property.InfrastructureParameterModelProperty": {"sequence": 12},
+                "org.mule.runtime.extension.api.property.QNameModelProperty": {"value": {
+                  "localPart": "error-mappings",
+                  "prefix": "mule",
+                  "namespaceURI": "http://www.mulesoft.org/schema/mule/core"
+                }},
+                "sinceMuleVersion": {"version": "4.4.0"}
+              },
+              "type": {
+                "item": {
+                  "annotations": {
+                    "infrastructureType": {},
+                    "typeId": "errorMapping"
+                  },
+                  "type": "Object",
+                  "fields": [
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {
+                          "typeId": "errorTypeMatcher",
+                          "enum": {
+                            "values": [
+                              "ANY",
+                              "REDELIVERY_EXHAUSTED",
+                              "TRANSFORMATION",
+                              "EXPRESSION",
+                              "SECURITY",
+                              "CLIENT_SECURITY",
+                              "SERVER_SECURITY",
+                              "ROUTING",
+                              "CONNECTIVITY",
+                              "RETRY_EXHAUSTED",
+                              "TIMEOUT"
+                            ],
+                            "type": "[Ljava.lang.String;"
+                          }
+                        },
+                        "type": "String"
+                      },
+                      "key": {"name": "source"}
+                    },
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {"typeId": "errorTypeDefinition"},
+                        "type": "String"
+                      },
+                      "key": {
+                        "name": "target",
+                        "required": "true"
+                      }
+                    }
+                  ]
+                },
+                "format": "java",
+                "annotations": {
+                  "typeDsl": {
+                    "allowTopLevelDefinition": false,
+                    "allowInlineDefinition": true
+                  },
+                  "infrastructureType": {},
+                  "description": {"value": "Determines that an error thrown by this operation should be mapped to another"}
+                },
+                "type": "Array"
+              },
+              "required": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "fieldValueProviderModels": [],
+              "hasDynamicType": false,
+              "isConfigOverride": false,
+              "dslConfiguration": {
+                "allowTopLevelDefinition": false,
+                "allowsInlineDefinition": true,
+                "allowsReferences": false
+              },
+              "name": "errorMappings",
+              "layoutModel": {
+                "password": false,
+                "tabName": "Error Mapping",
+                "query": false,
+                "text": false,
+                "order": 3
+              },
+              "allowedStereotypeModels": [],
+              "isComponentId": false
+            }],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          }
+        ],
+        "output": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "outputAttributes": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "type": "Void"
+          }
+        },
+        "supportsStreaming": false,
+        "requiresConnection": false,
+        "blocking": true,
+        "name": "setLoggingVariable",
+        "stereotype": {
+          "parent": {
+            "parent": {
+              "namespace": "MULE",
+              "type": "PROCESSOR"
+            },
+            "namespace": "TRACING",
+            "type": "PROCESSOR"
+          },
+          "namespace": "TRACING",
+          "type": "SET_LOGGING_VARIABLE"
+        },
+        "nestedComponents": [],
+        "transactional": false,
+        "notifications": [],
+        "errors": []
+      },
+      {
+        "displayModel": {"displayName": "With CorrelationID"},
+        "semanticTerms": [],
+        "kind": "operation",
+        "executionType": "CPU_LITE",
+        "description": "Scope that creates a process the inner chain modifying the current correlation id. After finishing its execution The correlation ID wil go back to the previous one.",
+        "modelProperties": {},
+        "parameterGroupModels": [
+          {
+            "name": "General",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 1
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [
+              {
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "",
+                "modelProperties": {},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": true,
+                "expressionSupport": "REQUIRED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "correlationId",
+                "layoutModel": {
+                  "password": false,
+                  "query": false,
+                  "text": false,
+                  "order": 1
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              },
+              {
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "The mime type of the payload that this operation outputs.",
+                "modelProperties": {"sinceMuleVersion": {"version": "4.2.0"}},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": false,
+                "expressionSupport": "SUPPORTED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "outputMimeType",
+                "layoutModel": {
+                  "password": false,
+                  "tabName": "Advanced",
+                  "query": false,
+                  "text": false,
+                  "order": 2
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              },
+              {
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "The encoding of the payload that this operation outputs.",
+                "modelProperties": {"sinceMuleVersion": {"version": "4.2.0"}},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": false,
+                "expressionSupport": "SUPPORTED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "outputEncoding",
+                "layoutModel": {
+                  "password": false,
+                  "tabName": "Advanced",
+                  "query": false,
+                  "text": false,
+                  "order": 3
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              }
+            ],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          },
+          {
+            "name": "Output",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 2
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [
+              {
+                "displayModel": {"displayName": "Target Variable"},
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "description": "The name of a variable on which the operation's output will be placed",
+                "modelProperties": {},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": false,
+                "expressionSupport": "NOT_SUPPORTED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "target",
+                "layoutModel": {
+                  "password": false,
+                  "tabName": "Advanced",
+                  "query": false,
+                  "text": false,
+                  "order": 4
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              },
+              {
+                "displayModel": {"displayName": "Target Value"},
+                "semanticTerms": [],
+                "role": "BEHAVIOUR",
+                "defaultValue": "#[payload]",
+                "description": "An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable",
+                "modelProperties": {},
+                "type": {
+                  "format": "java",
+                  "type": "String"
+                },
+                "required": false,
+                "expressionSupport": "REQUIRED",
+                "fieldValueProviderModels": [],
+                "hasDynamicType": false,
+                "isConfigOverride": false,
+                "dslConfiguration": {
+                  "allowTopLevelDefinition": false,
+                  "allowsInlineDefinition": false,
+                  "allowsReferences": false
+                },
+                "name": "targetValue",
+                "layoutModel": {
+                  "password": false,
+                  "tabName": "Advanced",
+                  "query": false,
+                  "text": false,
+                  "order": 5
+                },
+                "allowedStereotypeModels": [],
+                "isComponentId": false
+              }
+            ],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          },
+          {
+            "name": "Error Mappings",
+            "layoutModel": {
+              "password": false,
+              "query": false,
+              "text": false,
+              "order": 3
+            },
+            "description": "",
+            "modelProperties": {},
+            "parameters": [{
+              "semanticTerms": [],
+              "role": "BEHAVIOUR",
+              "description": "Set of error mappings",
+              "modelProperties": {
+                "org.mule.runtime.extension.api.property.InfrastructureParameterModelProperty": {"sequence": 12},
+                "org.mule.runtime.extension.api.property.QNameModelProperty": {"value": {
+                  "localPart": "error-mappings",
+                  "prefix": "mule",
+                  "namespaceURI": "http://www.mulesoft.org/schema/mule/core"
+                }},
+                "sinceMuleVersion": {"version": "4.4.0"}
+              },
+              "type": {
+                "item": {
+                  "annotations": {
+                    "infrastructureType": {},
+                    "typeId": "errorMapping"
+                  },
+                  "type": "Object",
+                  "fields": [
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {
+                          "typeId": "errorTypeMatcher",
+                          "enum": {
+                            "values": [
+                              "ANY",
+                              "REDELIVERY_EXHAUSTED",
+                              "TRANSFORMATION",
+                              "EXPRESSION",
+                              "SECURITY",
+                              "CLIENT_SECURITY",
+                              "SERVER_SECURITY",
+                              "ROUTING",
+                              "CONNECTIVITY",
+                              "RETRY_EXHAUSTED",
+                              "TIMEOUT"
+                            ],
+                            "type": "[Ljava.lang.String;"
+                          }
+                        },
+                        "type": "String"
+                      },
+                      "key": {"name": "source"}
+                    },
+                    {
+                      "model": {
+                        "format": {
+                          "validMimeTypes": ["text/plain"],
+                          "id": "text",
+                          "label": "Text"
+                        },
+                        "annotations": {"typeId": "errorTypeDefinition"},
+                        "type": "String"
+                      },
+                      "key": {
+                        "name": "target",
+                        "required": "true"
+                      }
+                    }
+                  ]
+                },
+                "format": "java",
+                "annotations": {
+                  "typeDsl": {
+                    "allowTopLevelDefinition": false,
+                    "allowInlineDefinition": true
+                  },
+                  "infrastructureType": {},
+                  "description": {"value": "Determines that an error thrown by this operation should be mapped to another"}
+                },
+                "type": "Array"
+              },
+              "required": false,
+              "expressionSupport": "NOT_SUPPORTED",
+              "fieldValueProviderModels": [],
+              "hasDynamicType": false,
+              "isConfigOverride": false,
+              "dslConfiguration": {
+                "allowTopLevelDefinition": false,
+                "allowsInlineDefinition": true,
+                "allowsReferences": false
+              },
+              "name": "errorMappings",
+              "layoutModel": {
+                "password": false,
+                "tabName": "Error Mapping",
+                "query": false,
+                "text": false,
+                "order": 6
+              },
+              "allowedStereotypeModels": [],
+              "isComponentId": false
+            }],
+            "exclusiveParametersModels": [],
+            "showInDsl": false
+          }
+        ],
+        "output": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": {
+              "validMimeTypes": ["*/*"],
+              "id": "*/*",
+              "label": "*/*"
+            },
+            "annotations": {
+              "classInformation": {
+                "implementedInterfaces": [],
+                "parent": "",
+                "classname": "java.lang.Object",
+                "hasDefaultConstructor": true,
+                "isInstantiable": true,
+                "isFinal": false,
+                "genericTypes": [],
+                "isInterface": false,
+                "isAbstract": false,
+                "isMap": false
+              },
+              "typeId": "java.lang.Object",
+              "typeAlias": {"value": "Object"}
+            },
+            "type": "Any"
+          }
+        },
+        "outputAttributes": {
+          "hasDynamicType": false,
+          "description": "",
+          "modelProperties": {},
+          "type": {
+            "format": "java",
+            "annotations": {
+              "classInformation": {
+                "implementedInterfaces": [],
+                "parent": "",
+                "classname": "java.lang.Object",
+                "hasDefaultConstructor": true,
+                "isInstantiable": true,
+                "isFinal": false,
+                "genericTypes": [],
+                "isInterface": false,
+                "isAbstract": false,
+                "isMap": false
+              },
+              "typeId": "java.lang.Object",
+              "typeAlias": {"value": "Object"}
+            },
+            "type": "Object",
+            "fields": []
+          }
+        },
+        "supportsStreaming": false,
+        "requiresConnection": false,
+        "blocking": false,
+        "name": "withCorrelationId",
+        "stereotype": {
+          "parent": {
+            "parent": {
+              "namespace": "MULE",
+              "type": "PROCESSOR"
+            },
+            "namespace": "TRACING",
+            "type": "PROCESSOR"
+          },
+          "namespace": "TRACING",
+          "type": "WITH_CORRELATION_ID"
+        },
+        "nestedComponents": [{
+          "allowedStereotypes": [{
+            "namespace": "MULE",
+            "type": "PROCESSOR"
+          }],
+          "isRequired": true,
+          "semanticTerms": [],
+          "minOccurs": 1,
+          "kind": "chain",
+          "name": "chain",
+          "description": "",
+          "maxOccurs": 1,
+          "modelProperties": {},
+          "parameterGroupModels": [],
+          "nestedComponents": [],
+          "errors": []
+        }],
+        "transactional": false,
+        "notifications": [],
+        "errors": []
+      }
+    ],
+    "vendor": "Mulesoft",
+    "name": "Tracing",
+    "privilegedPackages": [],
+    "category": "COMMUNITY",
+    "notifications": [],
+    "errors": [
+      {
+        "parent": "MULE:ANY",
+        "error": "MULE:CONNECTIVITY",
+        "handleable": true
+      },
+      {
+        "error": "MULE:ANY",
+        "handleable": true
+      },
+      {
+        "parent": "MULE:RETRY_EXHAUSTED",
+        "error": "TRACING:RETRY_EXHAUSTED",
+        "handleable": true
+      },
+      {
+        "parent": "MULE:ANY",
+        "error": "MULE:RETRY_EXHAUSTED",
+        "handleable": true
+      },
+      {
+        "parent": "MULE:CONNECTIVITY",
+        "error": "TRACING:CONNECTIVITY",
+        "handleable": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 321,
+    "title": "Notebook HP Intel i3 8GB RAM 250GB SSD",
+    "description": "Notebook HP 15' Intel i3 1115g4 8GB RAM 250GB SSD",
+    "category_id": 11,
+    "price": 80000.00,
+    "stock": 15,
+    "brand_id": 32
+  },
+  {
+    "id": 324,
+    "title": "Notebook Dell Intel i5 16GB RAM 512GB SSD",
+    "description": "Notebook Dell 15' Intel i5 11400g 16GB RAM 512GB SSD",
+    "category_id": 11,
+    "price": 120000.00,
+    "stock": 15,
+    "brand_id": 35
+  }
+]

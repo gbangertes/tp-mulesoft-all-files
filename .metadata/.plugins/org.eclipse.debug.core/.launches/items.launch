@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.mule.tooling.runtime.muleServerLaunchType">
+    <stringAttribute key="clear_data" value="NEVER"/>
+    <booleanAttribute key="consoleEnabled" value="true"/>
+    <stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.4.4.0.ee"/>
+    <stringAttribute key="maven.command.line" value=""/>
+    <booleanAttribute key="maven.snapshot.updates" value="false"/>
+    <stringAttribute key="mule-agent-port" value="38421"/>
+    <stringAttribute key="mule-agent-token-auth" value="c4fd03cb-ba8e-405b-826e-44a194330fa6"/>
+    <listAttribute key="mule-project-names">
+        <listEntry value="items-papi"/>
+        <listEntry value="items-xapi"/>
+        <listEntry value="items-sapi"/>
+    </listAttribute>
+    <intAttribute key="mule.debug.payload.max.collection.size" value="100"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="items-papi"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-M-XX:-UseBiasedLocking -M-Dfile.encoding=UTF-8 -M-XX:+UseG1GC -M-XX:+UseStringDeduplication"/>
+    <intAttribute key="remote-debug-max-stream-size" value="2"/>
+    <intAttribute key="remote-debug-port" value="6666"/>
+    <booleanAttribute key="remote-debug-suspend" value="false"/>
+</launchConfiguration>

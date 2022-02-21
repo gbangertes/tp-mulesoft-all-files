@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1" version="1.8.0_282">
+        <bootpath>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/resources.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/rt.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/sunrsasign.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jsse.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jce.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/charsets.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jfr.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/ext"/>
+            <entry path="/usr/java/packages/lib/ext"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/" version="1.8.0_282">
+        <bootpath>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/resources.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/rt.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/sunrsasign.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jsse.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jce.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/charsets.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/jfr.jar"/>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/ext"/>
+            <entry path="/usr/java/packages/lib/ext"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.v8.linux.x86_64_1.1.1/jre/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="/home/gab/epidata/AnypointStudio/plugins/org.mule.tooling.jdk.linux.x86_64_1.1.1" version="11.0.10"/>
+</libraryInfos>

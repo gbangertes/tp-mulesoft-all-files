@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+    <http:request-config name="HTTP_Request_configuration_papi" doc:name="HTTP Request configuration" doc:id="1ee51cb1-e2bc-404b-bd82-2dd7bc0a86bd" basePath="/api">
+		<http:request-connection host="${request.host}" port="${request.port}" />
+	</http:request-config>
+	<flow name="get:\items:items-papi-config">
+		<set-variable value="#[attributes.queryParams.sort_by]" doc:name="SetSortBy" doc:id="8df0b115-257d-41a8-8168-2766f60d313f" variableName="sortBy" />
+		<set-variable value="#[attributes.queryParams.order]" doc:name="SetOrder" doc:id="35f9b350-cea6-4dda-9cc9-66eddcf89f97" variableName="order" />
+		<http:request method="GET" doc:name="GetAllRequestToSAPI" doc:id="76d9a94f-16e2-4eb9-9e1a-0b3e58f4033c" config-ref="HTTP_Request_configuration_papi" path="/items">
+			<http:query-params><![CDATA[#[output application/java
+---
+{
+	"max_price" : attributes.queryParams.max_price,
+	"sort_by" : attributes.queryParams.sort_by,
+	"order" : attributes.queryParams.order,
+	"min_price" : attributes.queryParams.min_price
+}]]]></http:query-params>
+		</http:request>
+		<flow-ref doc:name="ToSorting" doc:id="b28e817d-2d7c-4c63-a115-a045f88edbd5" name="sorting" />
+		<flow-ref doc:name="ToFilter" doc:id="d64d6ba9-16a8-4986-8cf4-3e17dd98752a" name="filterFields"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="8a36deaf-57bc-4a34-ae48-62359edf8e3f" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="get:\items\(id):items-papi-config">
+		<http:request method="GET" doc:name="Request" doc:id="e450ddd3-0272-4077-8191-c3769d0d408c" config-ref="HTTP_Request_configuration_papi" path="/items/{id}">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<flow-ref doc:name="ToFilter" doc:id="778cbb4c-78da-48ee-9726-9ffade74209b" name="filterFields"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="5d19a5ab-83d9-4662-a0c5-9eeb52aac127" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="post:\items:application\json:items-papi-config">
+		<http:request method="POST" doc:name="Request" doc:id="0831fd05-32af-416d-aa1b-f24f7212dccd" config-ref="HTTP_Request_configuration_papi" path="/items" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f281267c-9e26-4420-9ace-2d60b2e7cfc2" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="patch:\items\(id):application\json:items-papi-config">
+		<http:request method="PATCH" doc:name="Request" doc:id="1240e722-e6a0-4a6a-bb92-1737e2b46ded" config-ref="HTTP_Request_configuration_papi" path="/items/{id}">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7ad1e7f4-70e7-46ec-9c78-178829bab84b" type="ANY"/>
+		</error-handler>
+    </flow>
+	<flow name="delete:\items\(id):items-papi-config">
+		<http:request method="DELETE" doc:name="Request" doc:id="2d9cb1cd-6cba-4478-a41f-675313a9dcc8" config-ref="HTTP_Request_configuration_papi" path="/items/{id}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="105f8d6e-e6da-45a6-b09f-3a9d9a306b6d" type="ANY"/>
+		</error-handler>
+    </flow>
+	<sub-flow name="filterFields" doc:id="89c39e36-8375-4cb0-8f9a-ea73e81aed90">
+		<ee:transform doc:name="FilterFields" doc:id="4d1701e5-506e-4294-8221-3c0b0f5ef33a">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map (item) -> {
+	id: item.id,
+	title: item.title,
+	description: item.description,
+	category_id: item.category_id,
+	price: item.price,
+	stock: item.stock,
+	brand_id: item.brand_id,
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="sorting" doc:id="8e3da77a-7038-4c50-b173-5e369e011685">
+		<choice doc:name="Order" doc:id="607bb442-9578-4cf1-a37a-83cd4b7e6702">
+			<when expression="#[vars.order == 'desc']">
+				<ee:transform doc:name="DescendingSort" doc:id="e51d1cb2-3f3f-4056-b157-47269ed6cfd6">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+if (vars.sortBy == 'price') payload orderBy (item) -> -item.price
+else if (vars.sortBy == 'category') payload orderBy (item) -> -item.category_id
+else if (vars.sortBy == 'title') payload orderBy (item) -> -item.title
+else payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</when>
+			<otherwise>
+				<ee:transform doc:name="AscendingSort" doc:id="d7b084f5-d0ed-4b20-9e01-2f3a78eb3715">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+if (vars.sortBy == 'price') payload orderBy (item) -> item.price
+else if (vars.sortBy == 'category') payload orderBy (item) -> item.category_id
+else if (vars.sortBy == 'title') payload orderBy (item) -> item.title
+else payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>

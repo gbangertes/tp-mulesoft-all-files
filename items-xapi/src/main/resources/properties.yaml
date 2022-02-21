@@ -1,0 +1,6 @@
+local:
+  host: "localhost"
+  port: "8081"
+request:
+  host: "localhost"
+  port: "8082"

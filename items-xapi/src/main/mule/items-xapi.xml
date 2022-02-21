@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+    <http:request-config name="HTTP_Request_configuration_xapi" doc:name="HTTP Request configuration" doc:id="63b00045-ea47-479d-8613-0b43565b9f82" basePath="/api" >
+		<http:request-connection host="${request.host}" port="${request.port}" />
+	</http:request-config>
+	<flow name="delete:\items\(id):items-xapi-config">
+		<http:request method="DELETE" doc:name="Request" doc:id="edaecea1-5d01-4895-bb97-86a2a88c73b4" config-ref="HTTP_Request_configuration_xapi" path="/items/{id}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="fe75f452-8862-4171-8fee-8f72c01e4e26" type="ANY"/>
+		</error-handler>
+    </flow>
+    <flow name="patch:\items\(id):application\json:items-xapi-config">
+		<http:request method="PATCH" doc:name="Request" doc:id="1f17c4d4-c3c4-41bb-a6fc-f93e3c72dcc6" config-ref="HTTP_Request_configuration_xapi" path="/items/{id}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7306e9bd-3bba-46b8-b2c6-16ce71111df4" type="ANY"/>
+		</error-handler>
+    </flow>
+    <flow name="get:\items:items-xapi-config">
+		<set-variable value="#[if (attributes.queryParams.min_price == null) 0 else attributes.queryParams.min_price]" doc:name="SetMinPrice" doc:id="f251a99e-4960-4e9f-b54a-a8d308187305" variableName="minPrice" />
+		<set-variable value="#[if (attributes.queryParams.max_price == null) 99999999 else attributes.queryParams.max_price]" doc:name="SetMaxPrice" doc:id="051a81a7-0d56-41f5-af64-d8b932fa689d" variableName="maxPrice"/>
+		<set-variable value="#[if (attributes.queryParams.sort_by == null) 'none' else attributes.queryParams.sort_by]" doc:name="SetSortBy" doc:id="e028c699-a56e-43e9-8568-1bca435df207" variableName="sortBy"/>
+		<set-variable value="#[if (attributes.queryParams.order == null) 'none' else attributes.queryParams.order]" doc:name="SetOrder" doc:id="ed64afe6-fcb2-42c5-ad2d-5106105dc652" variableName="order"/>
+		<http:request method="GET" doc:name="Request" doc:id="d43e7cc6-5f64-49df-8074-67f781e5cdf4" config-ref="HTTP_Request_configuration_xapi" path="/items">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"max_price" : vars.maxPrice,
+	"sort_by" : vars.sortBy,
+	"order" : vars.order,
+	"min_price" : vars.minPrice
+}]]]></http:query-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a54fe342-9a47-46a8-9a57-fd1a8c675730" type="ANY"/>
+		</error-handler>
+    </flow>
+    <flow name="get:\items\(id):items-xapi-config">
+		<http:request method="GET" doc:name="Request" doc:id="4a867841-fbdc-41d6-8caa-aa988221374b" config-ref="HTTP_Request_configuration_xapi" path="/items/{id}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.id
+}]]]></http:uri-params>
+		</http:request>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="8de77448-dd3c-4d0c-abe4-e165b96c33b1" type="ANY"/>
+		</error-handler>
+    </flow>
+    <flow name="post:\items:application\json:items-xapi-config">
+		<http:request method="POST" doc:name="Request" doc:id="27886cff-9759-4e4a-9e41-81e40c03ab7c" config-ref="HTTP_Request_configuration_xapi" path="/items"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="f57e1239-0815-40c8-b854-35fef0d5f984" type="ANY"/>
+		</error-handler>
+    </flow>
+</mule>

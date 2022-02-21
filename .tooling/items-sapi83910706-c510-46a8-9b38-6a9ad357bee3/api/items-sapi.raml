@@ -1,0 +1,129 @@
+#%RAML 1.0
+title: items-sapi
+
+/items:
+  get:
+    queryParameters:
+      min_price:
+        type: integer
+        required: true
+      max_price:
+        type: integer
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              !include examples/items-get-all-response.example.json
+      400:
+        body:
+          application/json:
+            example:
+              !include examples/code-400.example.json
+      500:
+        body:
+          application/json:
+            example:
+              !include examples/code-500.example.json
+
+  post:
+    body:
+      application/json:
+        example:
+          !include examples/items-create-request.example.json
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              !include examples/code-201.example.json
+      400:
+        body:
+          application/json:
+            example:
+              !include examples/code-400.example.json
+      500:
+        body:
+          application/json:
+            example:
+              !include examples/code-500.example.json
+        
+
+  /{id}:
+    uriParameters:
+      id:
+        type: integer
+
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                !include examples/items-get-one-response.example.json
+        400:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-400.example.json
+        404:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-404.example.json
+        500:
+          body:
+            application/json:
+              example:
+                !include examples/code-500.example.json
+    
+    patch:
+      body:
+        application/json:
+          example:
+            !include examples/items-update-request.example.json
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                !include examples/code-200.example.json
+        400:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-400.example.json
+        404:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-404.example.json
+        500:
+          body:
+            application/json:
+              example:
+                !include examples/code-500.example.json
+    
+    delete:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                !include examples/code-200.example.json
+        400:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-400.example.json
+        404:
+          body:
+            aplication/json:
+              example:
+                !include examples/code-404.example.json
+        500:
+          body:
+            application/json:
+              example:
+                !include examples/code-500.example.json

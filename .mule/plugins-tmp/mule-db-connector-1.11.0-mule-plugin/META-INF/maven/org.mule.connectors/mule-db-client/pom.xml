@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mule.connectors</groupId>
+    <artifactId>mule-db-client</artifactId>
+    <version>1.3.2</version>
+
+    <name>DB Client</name>
+    <description>DB Client for Mule Connectors that provides functionality for connecting to Databases through the JDBC standard</description>
+
+    <properties>
+        <mule.version>4.1.1</mule.version>
+        <mule.extensionApiVersion>1.1.5</mule.extensionApiVersion>
+        <c3p0Version>0.9.5.5</c3p0Version>
+        <commonsCollectionsVersion>3.2.2</commonsCollectionsVersion>
+        <commonsDbUtilsVersion>1.7</commonsDbUtilsVersion>
+        <commonsLangVersion>3.12.0</commonsLangVersion>
+        <commonsIoVersion>2.11.0</commonsIoVersion>
+        <mockito-core.version>4.1.0</mockito-core.version>
+        <xmlunit.version>1.6</xmlunit.version>
+        <caffeineVersion>2.9.3</caffeineVersion>
+        <javax.transaction.version>1.3</javax.transaction.version>
+        <xaPoolVersion>1.5.0</xaPoolVersion>
+        <cglibVersion>3.3.0</cglibVersion>
+        <derbyVersion>10.15.2.0</derbyVersion>
+        <junitVersion>4.13.2</junitVersion>
+
+        <docker.maven.plugin.version>0.34.1</docker.maven.plugin.version>
+        <maven-replacer-plugin.version>1.5.3</maven-replacer-plugin.version>
+
+        <javaVersion>1.8</javaVersion>
+        <javaFormatter.plugin.version>2.16.0</javaFormatter.plugin.version>
+        <formatterGoal>validate</formatterGoal>
+        <formatterConfigPath>formatter.xml</formatterConfigPath>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mule.runtime</groupId>
+            <artifactId>mule-extensions-api</artifactId>
+            <version>${mule.extensionApiVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.runtime</groupId>
+            <artifactId>mule-core</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>${c3p0Version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commonsLangVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commonsIoVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commonsCollectionsVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>javax.transaction-api</artifactId>
+            <version>${javax.transaction.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>${caffeineVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.experlog</groupId>
+            <artifactId>xapool</artifactId>
+            <version>${xaPoolVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>${commonsDbUtilsVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>${cglibVersion}</version>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junitVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${derbyVersion}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>${xmlunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.tests.plugin</groupId>
+            <artifactId>mule-tests-component-plugin</artifactId>
+            <version>${mule.version}</version>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Formatter plugin -->
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>${javaFormatter.plugin.version}</version>
+                <configuration>
+                    <compilerCompliance>${javaVersion}</compilerCompliance>
+                    <compilerSource>${javaVersion}</compilerSource>
+                    <compilerTargetPlatform>${javaVersion}</compilerTargetPlatform>
+                    <configFile>${basedir}/${formatterConfigPath}</configFile>
+                    <configJsFile>${basedir}/${formatterConfigPath}</configJsFile>
+                    <aggregator>false</aggregator>
+                    <executionRoot>true</executionRoot>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>apply-format</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>${formatterGoal}</goal>
+                        </goals>
+                        <configuration>
+                            <skipFormatting>false</skipFormatting>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- License Header plugin -->
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${skipVerifications}</skip>
+                    <header>com/mycila/maven/plugin/license/templates/CPAL.txt</header>
+                    <properties>
+                        <owner>MuleSoft, Inc</owner>
+                        <project.url>http://www.mulesoft.com</project.url>
+                    </properties>
+                    <excludes>
+                        <exclude>target/**</exclude>
+                        <exclude>**/.gitignore</exclude>
+                        <exclude>**/*.txt</exclude>
+                        <exclude>**/*.groovy</exclude>
+                        <exclude>**/*.sh</exclude>
+                        <exclude>**/*.bat</exclude>
+                        <exclude>**/*.ftl</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.sample</exclude>
+                        <exclude>**/*.md</exclude>
+                        <exclude>**/*.xsl</exclude>
+                        <exclude>**/*.html</exclude>
+                        <exclude>**/*.css</exclude>
+                        <exclude>**/build-number.txt</exclude>
+                        <exclude>**/*.wsdl</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                    <encoding>ISO-8859-1</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Maven plugins -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- Needed artifact for testing purposes on mule-ee/tests/xa-tx-->
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <downloadUrl>http://www.mulesoft.org/display/MULE/Download</downloadUrl>
+        <repository>
+            <id>mule-releases</id>
+            <name>Mule Release Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>mule-snapshots</id>
+            <name>Mule Snapshot Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>mule</id>
+            <name>Mule Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mule-plugin</id>
+            <name>Mule Repository</name>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

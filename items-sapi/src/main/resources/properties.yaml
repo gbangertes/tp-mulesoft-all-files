@@ -1,0 +1,10 @@
+local:
+  host: "localhost"
+  port: "8083"
+db:
+  mysql:
+    host: "localhost"
+    port: "3306"
+    user: "gab"
+    password: "wV4qrN.e"
+    database: "tp-mule"
